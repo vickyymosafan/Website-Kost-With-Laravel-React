@@ -37,7 +37,7 @@ A modern and professional boarding house (kost) management system built with Lar
 
 1. Clone the repository:
 ```bash
-git clone [repository-url]
+git clone https://github.com/vickyymosafan/Website-Kost-With-Laravel-React.git
 cd kost
 ```
 
