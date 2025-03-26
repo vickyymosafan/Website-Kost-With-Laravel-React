@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', [KostController::class, 'index'])->name('home');
+Route::get('/kost/{kost}', [KostController::class, 'show'])->name('kost.show');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

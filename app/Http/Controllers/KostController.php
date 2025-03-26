@@ -12,8 +12,15 @@ class KostController extends Controller
     {
         $kosts = Kost::latest()->get();
         
-        return Inertia::render('Home', [
+        return Inertia::render('Homepage', [
             'kosts' => $kosts
+        ]);
+    }
+
+    public function show(Kost $kost)
+    {
+        return Inertia::render('Kost/Show', [
+            'kost' => $kost
         ]);
     }
 }
