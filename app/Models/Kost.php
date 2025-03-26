@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
+use App\Models\Wishlist;
 
 class Kost extends Model
 {
@@ -14,8 +16,6 @@ class Kost extends Model
         'deskripsi',
         'harga',
         'lokasi',
-        'latitude',
-        'longitude',
         'fasilitas',
         'foto',
         'kontak_nama',
@@ -29,4 +29,14 @@ class Kost extends Model
         'latitude' => 'decimal:8',
         'longitude' => 'decimal:8',
     ];
+
+    public function wishlists()
+    {
+        return $this->hasMany(Wishlist::class);
+    }
+
+    public function wishlistedByUsers()
+    {
+        return $this->belongsToMany(User::class, 'wishlists');
+    }
 }
