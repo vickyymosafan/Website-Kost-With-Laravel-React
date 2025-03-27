@@ -12,8 +12,20 @@ class WishlistController extends Controller
     public function index()
     {
         $wishlists = auth()->user()->wishlistedKosts()
-            ->with(['images'])
-            ->get();
+            ->get()
+            ->map(function ($kost) {
+                return [
+                    'id' => $kost->id,
+                    'nama' => $kost->nama,
+                    'deskripsi' => $kost->deskripsi,
+                    'harga' => $kost->harga,
+                    'lokasi' => $kost->lokasi,
+                    'fasilitas' => $kost->fasilitas,
+                    'images' => $kost->images,
+                    'kontak_nama' => $kost->kontak_nama,
+                    'kontak_telepon' => $kost->kontak_telepon,
+                ];
+            });
 
         return Inertia::render('Wishlist/Index', [
             'wishlists' => $wishlists

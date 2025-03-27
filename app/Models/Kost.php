@@ -30,6 +30,13 @@ class Kost extends Model
         'longitude' => 'decimal:8',
     ];
 
+    public function getImagesAttribute()
+    {
+        return array_map(function($path) {
+            return asset('storage/' . $path);
+        }, $this->foto ?? []);
+    }
+
     public function wishlists()
     {
         return $this->hasMany(Wishlist::class);
@@ -38,5 +45,10 @@ class Kost extends Model
     public function wishlistedByUsers()
     {
         return $this->belongsToMany(User::class, 'wishlists');
+    }
+
+    public function isWishlistedBy(User $user)
+    {
+        return $this->wishlists()->where('user_id', $user->id)->exists();
     }
 }
