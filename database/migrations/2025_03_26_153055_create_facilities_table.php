@@ -15,18 +15,10 @@ return new class extends Migration
             $table->string('description')->nullable();
             $table->timestamps();
         });
-
-        Schema::create('kost_facilities', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('kost_id')->constrained()->onDelete('cascade');
-            $table->foreignId('facility_id')->constrained()->onDelete('cascade');
-            $table->timestamps();
-        });
     }
 
     public function down()
     {
-        Schema::dropIfExists('kost_facilities');
         Schema::dropIfExists('facilities');
     }
 };
