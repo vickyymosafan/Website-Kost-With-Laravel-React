@@ -17,22 +17,33 @@ class BookingController extends Controller
             'email' => 'required|email|max:255',
             'phone' => 'required|string|max:20',
             'notes' => 'nullable|string|max:1000',
+        ], [
+            'name.required' => 'Nama lengkap harus diisi',
+            'email.required' => 'Email harus diisi',
+            'email.email' => 'Format email tidak valid',
+            'phone.required' => 'Nomor telepon harus diisi',
         ]);
 
         if ($validator->fails()) {
             return back()->withErrors($validator->errors());
         }
 
-        $booking = Booking::create([
-            'user_id' => auth()->id(),
-            'kost_id' => $kost->id,
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'notes' => $request->notes,
-        ]);
+        try {
+            $booking = Booking::create([
+                'user_id' => auth()->id(),
+                'kost_id' => $kost->id,
+                'name' => $request->name,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'notes' => $request->notes,
+            ]);
 
-        return redirect()->back()->with('success', 'Permintaan pemesanan kost berhasil dikirim!');
+            return redirect()->back()->with('success', 'Permintaan pemesanan kost berhasil dikirim!');
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->withErrors(['error' => 'Terjadi kesalahan saat memproses permintaan. Silakan coba lagi.'])
+                ->withInput();
+        }
     }
 
     public function index()
