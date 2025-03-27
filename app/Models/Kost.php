@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Wishlist;
+use App\Models\Facility;
+use App\Models\KostImage;
+use App\Models\Booking;
 
 class Kost extends Model
 {
@@ -50,5 +53,20 @@ class Kost extends Model
     public function isWishlistedBy(User $user)
     {
         return $this->wishlists()->where('user_id', $user->id)->exists();
+    }
+
+    public function facilities()
+    {
+        return $this->belongsToMany(Facility::class, 'kost_facilities');
+    }
+
+    public function images()
+    {
+        return $this->hasMany(KostImage::class);
+    }
+
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class);
     }
 }

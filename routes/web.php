@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\KostController;
 use App\Http\Controllers\WishlistController;
+use App\Http\Controllers\BookingController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -26,6 +27,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
     Route::post('/wishlist/{kost}/toggle', [WishlistController::class, 'toggle'])->name('wishlist.toggle');
     Route::get('/wishlist/{kost}/check', [WishlistController::class, 'check'])->name('wishlist.check');
+
+    // Booking routes
+    Route::get('/bookings', [BookingController::class, 'index'])->name('bookings.index');
+    Route::post('/kost/{kost}/book', [BookingController::class, 'store'])->name('bookings.store');
 });
 
 // Auth routes (login, register, etc.)

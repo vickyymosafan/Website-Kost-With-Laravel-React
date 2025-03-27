@@ -41,6 +41,14 @@ class KostController extends Controller
 
         $kosts = $query->latest()->get();
         
+        // Transform the data to include image URLs
+        $kosts->transform(function ($kost) {
+            $kost->images = collect($kost->foto ?? [])->map(function($path) {
+                return asset('storage/' . $path);
+            });
+            return $kost;
+        });
+        
         return Inertia::render('Homepage', [
             'kosts' => $kosts,
             'filters' => $request->all()
@@ -49,7 +57,12 @@ class KostController extends Controller
 
     public function show(Kost $kost)
     {
-        return Inertia::render('Kost/Show', [
+        // Transform the data to include image URLs
+        $kost->images = collect($kost->foto ?? [])->map(function($path) {
+            return asset('storage/' . $path);
+        });
+        
+        return Inertia::render('Kost/Detail', [
             'kost' => $kost
         ]);
     }
