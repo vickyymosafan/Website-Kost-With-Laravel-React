@@ -18,49 +18,51 @@ export default function Index({ auth, wishlists }) {
                     {wishlists && wishlists.length > 0 ? (
                         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                             {wishlists.map((item) => (
-                                <div key={item.id} className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                                    <div className="relative aspect-video">
-                                        <img 
-                                            src={item.thumbnail || '/images/placeholder.jpg'} 
-                                            alt={item.nama}
-                                            className="object-cover w-full h-full"
-                                        />
-                                    </div>
-                                    <div className="p-6">
-                                        <h3 className="mb-2 text-xl font-semibold">{item.nama}</h3>
-                                        <p className="mb-4 text-gray-600 line-clamp-2">{item.deskripsi}</p>
-                                        <div className="mb-4">
-                                            <span className="text-lg font-bold text-primary">
-                                                Rp {item.harga}/bulan
-                                            </span>
+                                <div key={item.id} className="overflow-hidden bg-white shadow-sm sm:rounded-lg hover:shadow-md transition-shadow">
+                                    <Link href={route('kost.show', item.id)} className="block">
+                                        <div className="relative aspect-video">
+                                            <img 
+                                                src={item.thumbnail || '/images/placeholder.jpg'} 
+                                                alt={item.nama}
+                                                className="object-cover w-full h-full"
+                                            />
                                         </div>
-                                        <div className="mt-2 flex flex-wrap gap-1 mb-4">
-                                            {item.fasilitas.slice(0, 3).map((fasilitas, index) => (
-                                                <span
-                                                    key={index}
-                                                    className="inline-flex items-center px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded"
-                                                >
-                                                    {fasilitas.icon && (
-                                                        <i className={`${fasilitas.icon} mr-1`}></i>
-                                                    )}
-                                                    {fasilitas.nama}
+                                        <div className="p-6">
+                                            <h3 className="mb-2 text-xl font-semibold text-gray-800 hover:text-primary">{item.nama}</h3>
+                                            <p className="mb-4 text-gray-600 line-clamp-2">{item.deskripsi}</p>
+                                            <div className="mb-4">
+                                                <span className="text-lg font-bold text-primary">
+                                                    Rp {item.harga}/bulan
                                                 </span>
-                                            ))}
-                                            {item.fasilitas.length > 3 && (
-                                                <span className="inline-block px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded">
-                                                    +{item.fasilitas.length - 3} more
-                                                </span>
-                                            )}
+                                            </div>
+                                            <div className="mt-2 flex flex-wrap gap-1 mb-4">
+                                                {item.fasilitas.slice(0, 3).map((fasilitas, index) => (
+                                                    <span
+                                                        key={index}
+                                                        className="inline-flex items-center px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded"
+                                                    >
+                                                        {fasilitas.icon && (
+                                                            <i className={`${fasilitas.icon} mr-1`}></i>
+                                                        )}
+                                                        {fasilitas.nama}
+                                                    </span>
+                                                ))}
+                                                {item.fasilitas.length > 3 && (
+                                                    <span className="inline-block px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded">
+                                                        +{item.fasilitas.length - 3} more
+                                                    </span>
+                                                )}
+                                            </div>
                                         </div>
-                                        <div className="flex items-center justify-between">
-                                            <Link
-                                                href={route('kost.show', item.id)}
-                                                className="px-4 py-2 text-sm font-medium text-white transition-colors bg-primary hover:bg-primary-dark rounded-lg"
-                                            >
-                                                Lihat Detail
-                                            </Link>
-                                            <WishlistButton kostId={item.id} />
-                                        </div>
+                                    </Link>
+                                    <div className="px-6 pb-4 flex items-center justify-between border-t border-gray-100 mt-2 pt-4">
+                                        <Link
+                                            href={route('kost.show', item.id)}
+                                            className="px-4 py-2 text-sm font-medium text-white transition-colors bg-primary hover:bg-primary-dark rounded-lg"
+                                        >
+                                            Lihat Detail
+                                        </Link>
+                                        <WishlistButton kostId={item.id} />
                                     </div>
                                 </div>
                             ))}
