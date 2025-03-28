@@ -12,7 +12,7 @@ class WishlistController extends Controller
     public function index()
     {
         $wishlists = auth()->user()->wishlistedKosts()
-            ->with(['images', 'fasilitas'])
+            ->with(['images', 'facilities'])
             ->get()
             ->map(function ($kost) {
                 return [
@@ -21,7 +21,7 @@ class WishlistController extends Controller
                     'deskripsi' => $kost->deskripsi,
                     'harga' => number_format($kost->harga, 0, ',', '.'),
                     'lokasi' => $kost->lokasi,
-                    'fasilitas' => $kost->fasilitas->map(fn($f) => [
+                    'fasilitas' => $kost->facilities->map(fn($f) => [
                         'nama' => $f->nama,
                         'icon' => $f->icon
                     ]),

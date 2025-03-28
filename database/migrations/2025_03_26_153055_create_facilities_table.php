@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('facilities', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('nama');
             $table->string('icon')->nullable();
             $table->string('description')->nullable();
             $table->timestamps();
