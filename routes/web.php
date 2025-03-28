@@ -10,18 +10,23 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-// Public routes
-Route::get('/', [KostController::class, 'index'])->name('home');
-Route::get('/kost', [KostController::class, 'index'])->name('kost.index');
-Route::get('/kost/{kost}', [KostController::class, 'show'])->name('kost.show');
-Route::get('/owner-info', [OwnerController::class, 'info'])->name('owner.info');
-Route::get('/about', [AboutController::class, 'index'])->name('about');
-
 // Authentication routes
 require __DIR__.'/auth.php';
 
-// Protected routes
+// All routes require authentication
 Route::middleware(['auth', 'verified'])->group(function () {
+    // Home route
+    Route::get('/', [KostController::class, 'index'])->name('home');
+    
+    // Kost routes
+    Route::get('/kost', [KostController::class, 'index'])->name('kost.index');
+    Route::get('/kost/{kost}', [KostController::class, 'show'])->name('kost.show');
+    
+    // Information pages
+    Route::get('/owner-info', [OwnerController::class, 'info'])->name('owner.info');
+    Route::get('/about', [AboutController::class, 'index'])->name('about');
+
+    // Dashboard
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
