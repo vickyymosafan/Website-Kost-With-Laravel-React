@@ -9,10 +9,11 @@ use App\Models\Wishlist;
 use App\Models\Facility;
 use App\Models\KostImage;
 use App\Models\Booking;
+use App\Traits\HasImages;
 
 class Kost extends Model
 {
-    use HasFactory;
+    use HasFactory, HasImages;
 
     protected $fillable = [
         'nama',
@@ -33,11 +34,11 @@ class Kost extends Model
         'longitude' => 'decimal:8',
     ];
 
+    protected $appends = ['images'];
+
     public function getImagesAttribute()
     {
-        return array_map(function($path) {
-            return asset('storage/' . $path);
-        }, $this->foto ?? []);
+        return $this->getImageUrls();
     }
 
     public function wishlists()
