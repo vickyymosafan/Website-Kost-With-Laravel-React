@@ -37,7 +37,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // Wishlist routes
-    Route::resource('wishlist', WishlistController::class);
+    Route::prefix('dashboard')->group(function () {
+        Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
+        Route::post('/wishlist/{kost}', [WishlistController::class, 'toggle'])->name('wishlist.toggle');
+        Route::get('/wishlist/check/{kost}', [WishlistController::class, 'check'])->name('wishlist.check');
+    });
 
     // Booking routes
     Route::get('/bookings', [BookingController::class, 'index'])->name('bookings.index');

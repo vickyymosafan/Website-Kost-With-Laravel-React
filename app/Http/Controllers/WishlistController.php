@@ -12,22 +12,30 @@ class WishlistController extends Controller
     public function index()
     {
         $wishlists = auth()->user()->wishlistedKosts()
+            ->with(['images', 'fasilitas'])
             ->get()
             ->map(function ($kost) {
                 return [
                     'id' => $kost->id,
                     'nama' => $kost->nama,
                     'deskripsi' => $kost->deskripsi,
-                    'harga' => $kost->harga,
+                    'harga' => number_format($kost->harga, 0, ',', '.'),
                     'lokasi' => $kost->lokasi,
-                    'fasilitas' => $kost->fasilitas,
-                    'images' => $kost->images,
-                    'kontak_nama' => $kost->kontak_nama,
-                    'kontak_telepon' => $kost->kontak_telepon,
+                    'fasilitas' => $kost->fasilitas->map(fn($f) => [
+                        'nama' => $f->nama,
+                        'icon' => $f->icon
+                    ]),
+                    'thumbnail' => $kost->images->where('is_primary', true)->first()?->image_path 
+                        ?? $kost->images->first()?->image_path 
+                        ?? null,
+                    'kontak' => [
+                        'nama' => $kost->kontak_nama,
+                        'telepon' => $kost->kontak_telepon
+                    ]
                 ];
             });
 
-        return Inertia::render('Wishlist/Index', [
+        return Inertia::render('Dashboard/Wishlist/Index', [
             'wishlists' => $wishlists
         ]);
     }
@@ -39,14 +47,22 @@ class WishlistController extends Controller
 
         if ($exists) {
             $user->wishlists()->where('kost_id', $kost->id)->delete();
-            return response()->json(['wishlisted' => false]);
+            return response()->json([
+                'status' => 'success',
+                'wishlisted' => false,
+                'message' => 'Kost berhasil dihapus dari wishlist'
+            ]);
         }
 
         $user->wishlists()->create([
             'kost_id' => $kost->id
         ]);
 
-        return response()->json(['wishlisted' => true]);
+        return response()->json([
+            'status' => 'success',
+            'wishlisted' => true,
+            'message' => 'Kost berhasil ditambahkan ke wishlist'
+        ]);
     }
 
     public function check(Kost $kost)
@@ -55,6 +71,9 @@ class WishlistController extends Controller
             ->where('kost_id', $kost->id)
             ->exists();
 
-        return response()->json(['wishlisted' => $wishlisted]);
+        return response()->json([
+            'status' => 'success',
+            'wishlisted' => $wishlisted
+        ]);
     }
 }

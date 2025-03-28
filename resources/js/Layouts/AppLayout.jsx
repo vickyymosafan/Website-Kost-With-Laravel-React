@@ -1,9 +1,10 @@
 import React from 'react';
 import Navbar from '@/Components/Navbar';
+import { Toaster } from 'react-hot-toast';
 
 export default function AppLayout({ children }) {
     return (
-        <div className="min-h-screen bg-gray-100">
+        <div className="min-h-screen bg-gray-50">
             <Navbar />
             
             {/* Main Content */}
@@ -21,6 +22,16 @@ export default function AppLayout({ children }) {
                     </p>
                 </div>
             </footer>
+            <Toaster
+                position="top-right"
+                toastOptions={{
+                    duration: 3000,
+                    style: {
+                        background: '#333',
+                        color: '#fff',
+                    },
+                }}
+            />
         </div>
     );
 }
