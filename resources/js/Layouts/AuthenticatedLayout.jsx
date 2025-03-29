@@ -45,7 +45,7 @@ export default function AuthenticatedLayout({ header, children }) {
                                     href={route('wishlist.index')}
                                     active={route().current('wishlist.index')}
                                 >
-                                    Favorit
+                                    Wishlist
                                 </NavLink>
                             </div>
                         </div>
