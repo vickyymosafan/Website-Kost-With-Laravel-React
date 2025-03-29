@@ -1,10 +1,16 @@
 import React from 'react';
 import Navbar from '@/Components/Navbar';
 import { Toaster } from 'react-hot-toast';
+import { Head } from '@inertiajs/react';
 
-export default function AppLayout({ children }) {
+export default function AppLayout({ children, title = 'KostKita' }) {
     return (
         <div className="min-h-screen bg-gray-50">
+            <Head>
+                <title>{title}</title>
+                <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+            </Head>
+            
             <Navbar />
             
             {/* Main Content */}
