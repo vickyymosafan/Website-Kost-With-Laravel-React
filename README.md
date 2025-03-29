@@ -59,6 +59,12 @@ php artisan key:generate
 
 5. Set up database:
 ```bash
+# Create a MySQL database named 'kost'
+# Update .env file with your database credentials:
+# DB_DATABASE=kost
+# DB_USERNAME=your_username
+# DB_PASSWORD=your_password
+
 php artisan migrate
 php artisan db:seed
 ```
@@ -72,6 +78,8 @@ npm run dev
 ```bash
 php artisan serve
 ```
+
+**Note:** This project is currently under active development. Some features may be incomplete or subject to change.
 
 ## Security
 
