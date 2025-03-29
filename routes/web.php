@@ -6,6 +6,8 @@ use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\NewsController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -16,7 +18,11 @@ require __DIR__.'/auth.php';
 // All routes require authentication
 Route::middleware(['auth', 'verified'])->group(function () {
     // Home route
-    Route::get('/', [KostController::class, 'index'])->name('home');
+    Route::get('/', [HomeController::class, 'index'])->name('home');
+    
+    // News routes
+    Route::get('/news', [NewsController::class, 'index'])->name('news.index');
+    Route::get('/news/{slug}', [NewsController::class, 'show'])->name('news.show');
     
     // Kost routes
     Route::get('/kost', [KostController::class, 'index'])->name('kost.index');
