@@ -1,11 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Head } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
 import KostCard from '@/Components/KostCard';
 import SearchFilter from '@/Components/SearchFilter';
 import NewsSlider from '@/Components/NewsSlider';
+import LocationModal from '@/Components/LocationModal';
 
-export default function Homepage({ kosts, filters, news }) {
+export default function Homepage({ kosts, filters, news, recommendations, popularLocations }) {
+  const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
+  const [selectedType, setSelectedType] = useState(null);
+
+  const handleKostCardClick = (type) => {
+    setSelectedType(type);
+    setIsLocationModalOpen(true);
+  };
+
   return (
     <AppLayout>
       <Head title="Temukan Kost Impianmu" />
@@ -22,30 +31,48 @@ export default function Homepage({ kosts, filters, news }) {
         </div>
       </div>
 
+      {/* Rekomendasi Kost Section */}
       <div className="py-12">
         <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-8">
-            Rekomendasi Kost
-          </h1>
-          
-          {kosts.length > 0 ? (
+          {/* Mahasiswa Section */}
+          <div className="mb-12">
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">
+              Rekomendasi Kost Mahasiswa
+            </h2>
+            
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {kosts.map((kost) => (
-                <KostCard key={kost.id} kost={kost} />
+              {recommendations.mahasiswa.map((kost) => (
+                <div key={kost.id} onClick={() => handleKostCardClick('mahasiswa')}>
+                  <KostCard kost={kost} />
+                </div>
               ))}
             </div>
-          ) : (
-            <div className="text-center py-12">
-              <h3 className="text-lg font-medium text-gray-900">
-                Tidak ada kost yang ditemukan
-              </h3>
-              <p className="mt-2 text-sm text-gray-600">
-                Coba ubah filter pencarian Anda
-              </p>
+          </div>
+
+          {/* Karyawan Section */}
+          <div>
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">
+              Rekomendasi Kost Karyawan
+            </h2>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {recommendations.karyawan.map((kost) => (
+                <div key={kost.id} onClick={() => handleKostCardClick('karyawan')}>
+                  <KostCard kost={kost} />
+                </div>
+              ))}
             </div>
-          )}
+          </div>
         </div>
       </div>
+
+      {/* Location Selection Modal */}
+      <LocationModal
+        isOpen={isLocationModalOpen}
+        onClose={() => setIsLocationModalOpen(false)}
+        locations={popularLocations}
+        selectedType={selectedType}
+      />
     </AppLayout>
   );
 }

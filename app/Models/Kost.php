@@ -17,9 +17,12 @@ class Kost extends Model
 
     protected $fillable = [
         'nama',
-        'deskripsi',
-        'harga',
         'lokasi',
+        'harga',
+        'deskripsi',
+        'thumbnail',
+        'tipe',
+        'status',
         'fasilitas',
         'foto',
         'kontak_nama',
