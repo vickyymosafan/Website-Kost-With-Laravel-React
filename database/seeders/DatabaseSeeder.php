@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             NewsSeeder::class,
             FacilitySeeder::class,
-            KostSeeder::class,
+            RecommendationKostSeeder::class,
             // Add other seeders here
         ]);
     }

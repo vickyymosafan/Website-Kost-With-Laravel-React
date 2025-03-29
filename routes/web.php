@@ -27,6 +27,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Kost routes
     Route::get('/kost', [KostController::class, 'index'])->name('kost.index');
     Route::get('/kost/{kost}', [KostController::class, 'show'])->name('kost.show');
+    Route::get('/kosts/recommendations', [KostController::class, 'recommendations'])->name('kost.recommendations');
     
     // Information pages
     Route::get('/owner-info', [OwnerController::class, 'info'])->name('owner.info');

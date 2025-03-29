@@ -32,4 +32,25 @@ class KostController extends Controller
             'kost' => $kost
         ]);
     }
+
+    public function recommendations(Request $request)
+    {
+        $lokasi = $request->input('lokasi');
+        $tipe = $request->input('tipe');
+
+        $kosts = Kost::query()
+            ->when($lokasi, function ($query) use ($lokasi) {
+                return $query->where('lokasi', $lokasi);
+            })
+            ->when($tipe, function ($query) use ($tipe) {
+                return $query->where('tipe', $tipe);
+            })
+            ->get();
+
+        return Inertia::render('Kost/Recommendations', [
+            'kosts' => $kosts,
+            'selectedLocation' => $lokasi,
+            'selectedType' => $tipe
+        ]);
+    }
 }

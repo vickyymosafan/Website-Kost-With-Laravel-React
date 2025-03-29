@@ -18,6 +18,7 @@ class Kost extends Model
     protected $fillable = [
         'nama',
         'lokasi',
+        'detail_lokasi',
         'harga',
         'deskripsi',
         'thumbnail',
@@ -27,6 +28,8 @@ class Kost extends Model
         'foto',
         'kontak_nama',
         'kontak_telepon',
+        'latitude',
+        'longitude',
     ];
 
     protected $casts = [

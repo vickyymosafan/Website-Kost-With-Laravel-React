@@ -6,6 +6,19 @@ import SearchFilter from '@/Components/SearchFilter';
 import NewsSlider from '@/Components/NewsSlider';
 import LocationModal from '@/Components/LocationModal';
 
+const KOST_TYPES = [
+  {
+    id: 'mahasiswa',
+    title: 'Kost untuk Mahasiswa',
+    image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80'
+  },
+  {
+    id: 'karyawan',
+    title: 'Kost untuk Karyawan',
+    image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80'
+  }
+];
+
 export default function Homepage({ kosts, filters, news, recommendations, popularLocations }) {
   const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
   const [selectedType, setSelectedType] = useState(null);
@@ -34,34 +47,29 @@ export default function Homepage({ kosts, filters, news, recommendations, popula
       {/* Rekomendasi Kost Section */}
       <div className="py-12">
         <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-          {/* Mahasiswa Section */}
-          <div className="mb-12">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">
-              Rekomendasi Kost Mahasiswa
-            </h2>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {recommendations.mahasiswa.map((kost) => (
-                <div key={kost.id} onClick={() => handleKostCardClick('mahasiswa')}>
-                  <KostCard kost={kost} />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {KOST_TYPES.map((type) => (
+              <div 
+                key={type.id}
+                className="relative overflow-hidden rounded-xl shadow-lg cursor-pointer group"
+                onClick={() => handleKostCardClick(type.id)}
+              >
+                <div className="aspect-w-16 aspect-h-9">
+                  <img
+                    src={type.image}
+                    alt={type.title}
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
                 </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Karyawan Section */}
-          <div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">
-              Rekomendasi Kost Karyawan
-            </h2>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {recommendations.karyawan.map((kost) => (
-                <div key={kost.id} onClick={() => handleKostCardClick('karyawan')}>
-                  <KostCard kost={kost} />
+                <div className="absolute bottom-0 left-0 right-0 p-6">
+                  <h2 className="text-2xl font-bold text-white mb-2">{type.title}</h2>
+                  <button className="px-4 py-2 bg-white text-gray-900 rounded-lg font-medium hover:bg-gray-100 transition-colors">
+                    Lihat Semua
+                  </button>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>

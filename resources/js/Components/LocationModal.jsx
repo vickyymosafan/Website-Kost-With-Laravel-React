@@ -4,7 +4,7 @@ import { router } from '@inertiajs/react';
 
 export default function LocationModal({ isOpen, onClose, locations, selectedType }) {
     const handleLocationSelect = (location) => {
-        router.get('/', {
+        router.get('/kosts/recommendations', {
             lokasi: location,
             tipe: selectedType
         }, {
@@ -29,9 +29,10 @@ export default function LocationModal({ isOpen, onClose, locations, selectedType
                             <button
                                 key={location}
                                 onClick={() => handleLocationSelect(location)}
-                                className="p-3 text-left rounded-lg hover:bg-gray-100 transition-colors"
+                                className="p-4 text-left rounded-lg hover:bg-gray-100 transition-colors flex items-center space-x-2"
                             >
-                                {location}
+                                <span className="material-icons text-gray-600">location_on</span>
+                                <span>{location}</span>
                             </button>
                         ))}
                     </div>
